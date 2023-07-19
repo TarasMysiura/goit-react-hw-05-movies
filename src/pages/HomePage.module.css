@@ -1,0 +1,15 @@
+.title {
+  font-size: 40px;
+  font-weight: 600;
+}
+
+.movieList {
+  font-size: 16px;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.movieItem {
+list-style-type: none;
+line-height: 1.4;
+}
