@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchMoviesTrending } from 'services/Api';
-import css from './HomePage.module.css';
+import css from './Page.module.css';
+import { toast } from 'react-toastify';
+import { toastConfig } from 'services/data';
 
 const HomePage = () => {
   const [movies, setMovies] = useState([]);
@@ -12,7 +14,7 @@ const HomePage = () => {
         const data = await fetchMoviesTrending();
         setMovies(data.results);
       } catch (error) {
-        console.error(error);
+        toast.error(error, toastConfig);
       }
     };
 

@@ -1,11 +1,6 @@
 import axios from 'axios';
+import { API_KEY, BYID, BYQUERY, TRENDING } from './data';
 // import { toast } from 'react-toastify';
-
-export const TRENDING = 'https://api.themoviedb.org/3/trending/movie/week';
-export const BYQUERY = 'https://api.themoviedb.org/3/search/movie';
-export const BYID = `https://api.themoviedb.org/3/movie`;
-
-const API_KEY = 'da941fd87e0dbd132cbb203164655245'
 
 export const fetchMoviesTrending = async () => {
   const axiosOptions = {
@@ -19,6 +14,7 @@ export const fetchMoviesTrending = async () => {
   const { data } = await axios(axiosOptions);
   return data;
 };
+
 export const fetchMoviesSearch = async (searchQuery = '') => {
   const axiosOptions = {
     method: 'get',
@@ -32,20 +28,41 @@ export const fetchMoviesSearch = async (searchQuery = '') => {
   return data;
 };
 
-// async function fetchMovies(USED_URL, searchQuery = '') {
-//   const axiosOptions = {
-//     method: 'get',
-//     url: USED_URL,
-//     params: {
-//       api_key: 'da941fd87e0dbd132cbb203164655245',
-//       query: searchQuery,
-//     },
-//   };
-//   // try {
-//   const response = await axios(axiosOptions);
-//   return response.data;
-//   //   } catch {
-//   //     toast.info("We're sorry, but you've reached the end of search results.");
-//   //   }
-// }
-// export default fetchMoviesTrending, fe;
+export const fetchMoviesDetails = async idMovie => {
+  const axiosOptions = {
+    method: 'get',
+    url: `${BYID}/${idMovie}`,
+    params: {
+      api_key: API_KEY,
+      id: idMovie,
+    },
+  };
+  const { data } = await axios(axiosOptions);
+  return data;
+};
+
+export const fetchMoviesDetailsCast = async idMovie => {
+  const axiosOptions = {
+    method: 'get',
+    url: `${BYID}/${idMovie}/credits`,
+    params: {
+      api_key: API_KEY,
+      id: idMovie,
+    },
+  };
+  const { data } = await axios(axiosOptions);
+  return data;
+};
+
+export const fetchMoviesDetailsReviews = async idMovie => {
+  const axiosOptions = {
+    method: 'get',
+    url: `${BYID}/${idMovie}/reviews`,
+    params: {
+      api_key: API_KEY,
+      id: idMovie,
+    },
+  };
+  const { data } = await axios(axiosOptions);
+  return data;
+};
