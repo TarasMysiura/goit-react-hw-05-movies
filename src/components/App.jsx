@@ -1,9 +1,14 @@
-import HomePage from 'pages/HomePage';
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { NavLink, Route, Routes } from 'react-router-dom';
 import styles from './App.module.css';
-import MoviesPage from 'pages/MoviesPage';
-import MovieDetailsPage from 'pages/MovieDetailsPage';
+import { Loader } from './Loader/Loader';
+// import HomePage from 'pages/HomePage';
+// import MoviesPage from 'pages/MoviesPage';
+// import MovieDetailsPage from 'pages/MovieDetailsPage';
+
+const HomePage = lazy(() => import('pages/HomePage'));
+const MoviesPage = lazy(() => import('pages/MoviesPage'));
+const MovieDetailsPage = lazy(() => import('pages/MovieDetailsPage'));
 
 const App = () => {
   return (
@@ -19,13 +24,13 @@ const App = () => {
         </nav>
       </header>
       <main>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/movies" element={<MoviesPage />} />
-          <Route path="/movies/:id/*" element={<MovieDetailsPage />} />
-          {/* <Route path="/movies/:id/cast" element={<MovieDetailsPage />} />
-          <Route path="/movies/:id/review" element={<MovieDetailsPage />} /> */}
-        </Routes>
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/movies" element={<MoviesPage />} />
+            <Route path="/movies/:id/*" element={<MovieDetailsPage />} />
+          </Routes>
+        </Suspense>
       </main>
       <footer></footer>
     </div>

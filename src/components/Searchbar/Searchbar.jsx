@@ -3,8 +3,13 @@ import PropTypes from 'prop-types';
 import { ImSearch } from 'react-icons/im';
 import css from './Searchbar.module.css';
 import { toast } from 'react-toastify';
+import { useSearchParams } from 'react-router-dom';
 
 const Searchbar = ({ onSubmit }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchTerm = searchParams.get('query');
+  // const location = useLocation();
+
   const [movieName, setMovieName] = useState('');
 
   //   const handleNameChange = () => {};
@@ -19,8 +24,12 @@ const Searchbar = ({ onSubmit }) => {
       toast.error('Please, input image name');
       return;
     }
+    if (movieName.trim().length > 2) {
+      setSearchParams({ query: movieName });
+    }
     // console.log(movieName);
-    onSubmit(movieName);
+    onSubmit(searchTerm);
+
     setMovieName('');
   };
 
@@ -39,6 +48,8 @@ const Searchbar = ({ onSubmit }) => {
             autoComplete="off"
             autoFocus
             placeholder="Search movies"
+            required
+            minLength={2}
           />
         </form>
       </header>

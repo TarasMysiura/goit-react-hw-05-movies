@@ -15,14 +15,14 @@ const ReviewsPage = () => {
         const { results } = await fetchMoviesDetailsReviews(id);
         setReviews(results);
       } catch (error) {
-        toast.error('Error fetching movie details:', error, toastConfig);
+        toast.error(`Error fetching movie details: ${error}`, toastConfig);
       }
     };
     fetchReviews();
   }, [id]);
 
   return reviews.length === 0 ? (
-    <h3>No Reviews.</h3>
+    <h3 className={css.reviews_title}>No Reviews.</h3>
   ) : (
     <div className={css.reviewsPage_container}>
       <h2 className={css.reviews_title}>Reviews</h2>

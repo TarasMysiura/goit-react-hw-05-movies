@@ -21,7 +21,9 @@ const CastPage = () => {
     fetchCast();
   }, [id]);
 
-  return (
+  return cast.length === 0 ? (
+    <h3 className={css.cast_title}>No Cast.</h3>
+  ) : (
     <div className={css.castPage_container}>
       <h2 className={css.cast_title}>Cast</h2>
       <ul className={css.cast_list}>
