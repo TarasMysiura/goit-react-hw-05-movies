@@ -1,6 +1,6 @@
 import React, { Suspense, lazy } from 'react';
 import { NavLink, Route, Routes } from 'react-router-dom';
-import styles from './App.module.css';
+import css from './App.module.css';
 import { Loader } from './Loader/Loader';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,9 +14,9 @@ const MovieDetailsPage = lazy(() => import('pages/MovieDetailsPage'));
 
 const App = () => {
   return (
-    <div className={styles.container}>
-      <header className={styles.header}>
-        <nav className={styles.nav}>
+    <div className={css.container}>
+      <header className={css.header}>
+        <nav className={css.nav}>
           <NavLink to="/">
             <h2>Home</h2>{' '}
           </NavLink>
