@@ -1,6 +1,6 @@
 import Searchbar from 'components/Searchbar/Searchbar';
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { fetchMoviesSearch } from 'services/Api';
 import css from './Page.module.css';
@@ -8,29 +8,30 @@ import { Loader } from 'components/Loader/Loader';
 import { toastConfig } from 'services/data';
 
 const MoviesPage = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  // const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [movies, setMovies] = useState([]);
   const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchTerm = searchParams.get('query');
 
   useEffect(() => {
-    if (!searchQuery) return;
+    if (!searchTerm) return;
 
     const fetchMoviesByQuery = async () => {
-      if (searchQuery.trim() === '') {
+      if (searchTerm.trim() === '') {
         return;
       }
       try {
         setIsLoading(true);
-        const { results } = await fetchMoviesSearch(searchQuery);
-        console.log(results);
+        const { results } = await fetchMoviesSearch(searchTerm);
         if (results.length === 0 || !results) {
           return toast.error('Sorry movies not found...', toastConfig);
         }
-        toast.success(
-          'Your search movies were successfully fetched!',
-          toastConfig
-        );
+        // toast.success(
+        //   'Your search movies were successfully fetched!',
+        //   toastConfig
+        // );
 
         setMovies(results);
         setIsLoading(false);
@@ -41,10 +42,11 @@ const MoviesPage = () => {
       }
     };
     fetchMoviesByQuery();
-  }, [searchQuery]);
+  }, [searchTerm]);
 
   const handleInputChange = searchQuery => {
-    setSearchQuery(searchQuery);
+    // setSearchQuery(searchQuery);
+    setSearchParams({ query: searchQuery });
     setMovies([]);
   };
 

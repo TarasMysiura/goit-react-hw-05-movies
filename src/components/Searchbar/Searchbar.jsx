@@ -3,14 +3,9 @@ import PropTypes from 'prop-types';
 import { ImSearch } from 'react-icons/im';
 import css from './Searchbar.module.css';
 import { toast } from 'react-toastify';
-import { useSearchParams } from 'react-router-dom';
 import { toastConfig } from 'services/data';
 
 const Searchbar = ({ onSubmit }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const searchTerm = searchParams.get('query');
-  // console.log(searchTerm);
-
   const [movieName, setMovieName] = useState('');
 
   const handleNameChange = event => {
@@ -20,19 +15,14 @@ const Searchbar = ({ onSubmit }) => {
   const handleSubmit = event => {
     event.preventDefault();
 
-    if (searchTerm?.trim() === '') {
+    if (movieName?.trim() === '') {
       toast.error('Please, input movie name', toastConfig);
       return;
     }
 
-    // if (movieName.trim().length > 2) {
-    setSearchParams({ query: movieName });
-    // }
-
     onSubmit(movieName);
 
     setMovieName('');
-    // setSearchParams({ query: '' });
   };
 
   return (

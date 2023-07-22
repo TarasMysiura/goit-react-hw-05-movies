@@ -4,18 +4,27 @@ import { toast } from 'react-toastify';
 import { fetchMoviesDetailsCast } from 'services/Api';
 import { toastConfig } from 'services/data';
 import css from './Page.module.css';
+import { Loader } from 'components/Loader/Loader';
 
 const CastPage = () => {
   const { id } = useParams();
   const [cast, setCast] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchCast = async () => {
       try {
-        const response = await fetchMoviesDetailsCast(id);
-        setCast(response.cast);
+        setIsLoading(true);
+        const { cast } = await fetchMoviesDetailsCast(id);
+        setCast(cast);
+        setIsLoading(false);
       } catch (error) {
+        setError(error.message);
+
         toast.error('Error fetching movie details:', error, toastConfig);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchCast();
@@ -48,6 +57,8 @@ const CastPage = () => {
           </li>
         ))}
       </ul>
+      {error && toast.error('Something went wrong...')}
+      {isLoading && <Loader />}
     </div>
   );
 };

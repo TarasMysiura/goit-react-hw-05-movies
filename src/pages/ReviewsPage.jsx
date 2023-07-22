@@ -4,18 +4,26 @@ import { useParams } from 'react-router-dom';
 import { fetchMoviesDetailsReviews } from 'services/Api';
 import { toast } from 'react-toastify';
 import { toastConfig } from 'services/data';
+import { Loader } from 'components/Loader/Loader';
 
 const ReviewsPage = () => {
   const { id } = useParams();
   const [reviews, setReviews] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchReviews = async () => {
       try {
+        setIsLoading(true);
         const { results } = await fetchMoviesDetailsReviews(id);
         setReviews(results);
+        setIsLoading(false);
       } catch (error) {
+        setError(error.message);
         toast.error(`Error fetching movie details: ${error}`, toastConfig);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchReviews();
@@ -34,6 +42,8 @@ const ReviewsPage = () => {
           </li>
         ))}
       </ul>
+      {error && toast.error('Something went wrong...')}
+      {isLoading && <Loader />}
     </div>
   );
 };

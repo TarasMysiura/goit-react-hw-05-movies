@@ -20,7 +20,7 @@ const HomePage = () => {
         setIsLoading(true);
         const { results } = await fetchMoviesTrending();
         setMovies(results);
-        toast.success('Your posts were successfully fetched!', toastConfig);
+        // toast.success('Your posts were successfully fetched!', toastConfig);
         setIsLoading(false);
       } catch (error) {
         setError(error.message);

@@ -17,11 +17,11 @@ const App = () => {
     <div className={css.container}>
       <header className={css.header}>
         <nav className={css.nav}>
-          <NavLink to="/">
-            <h2>Home</h2>{' '}
+          <NavLink to="/" className={css.link}>
+            <h2 className={css.name}>Home</h2>{' '}
           </NavLink>
-          <NavLink to="/movies">
-            <h2>Movies</h2>
+          <NavLink to="/movies" className={css.link}>
+            <h2 className={css.name}>Movies</h2>
           </NavLink>
         </nav>
       </header>
