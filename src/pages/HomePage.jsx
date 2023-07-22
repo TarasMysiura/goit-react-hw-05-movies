@@ -18,8 +18,8 @@ const HomePage = () => {
     const fetchMoviesFunc = async () => {
       try {
         setIsLoading(true);
-        const data = await fetchMoviesTrending();
-        setMovies(data.results);
+        const { results } = await fetchMoviesTrending();
+        setMovies(results);
         toast.success('Your posts were successfully fetched!', toastConfig);
         setIsLoading(false);
       } catch (error) {

@@ -23,7 +23,7 @@ const MovieDetailsPage = () => {
   const { id } = useParams();
   const location = useLocation();
   const backLickHref = useRef(location.state?.from ?? '/');
-  console.log(location);
+  // console.log(location);
 
 
   useEffect(() => {
