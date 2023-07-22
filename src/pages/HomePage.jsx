@@ -12,18 +12,19 @@ import { toastConfig } from 'services/data';
 const HomePage = () => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchMoviesFunc = async () => {
       try {
         setIsLoading(true);
-
         const data = await fetchMoviesTrending();
         setMovies(data.results);
-        toast.success('Its OK', toastConfig);
+        toast.success('Your posts were successfully fetched!', toastConfig);
         setIsLoading(false);
       } catch (error) {
-        toast.error(error, toastConfig);
+        setError(error.message);
+        toast.error(error.message, toastConfig);
       } finally {
         setIsLoading(false);
       }
@@ -34,6 +35,7 @@ const HomePage = () => {
   return (
     <div>
       <h1 className={css.title}>Trending today</h1>
+      {error && toast.error('Something went wrong...')}
       <ul className={css.movieList}>
         {movies.map(({ id, original_title }) => (
           <li key={id} className={css.movieItem}>

@@ -2,6 +2,8 @@ import React, { Suspense, lazy } from 'react';
 import { NavLink, Route, Routes } from 'react-router-dom';
 import styles from './App.module.css';
 import { Loader } from './Loader/Loader';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // import HomePage from 'pages/HomePage';
 // import MoviesPage from 'pages/MoviesPage';
 // import MovieDetailsPage from 'pages/MovieDetailsPage';
@@ -31,6 +33,7 @@ const App = () => {
             <Route path="/movies/:id/*" element={<MovieDetailsPage />} />
           </Routes>
         </Suspense>
+        <ToastContainer />
       </main>
       <footer></footer>
     </div>

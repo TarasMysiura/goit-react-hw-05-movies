@@ -4,33 +4,35 @@ import { ImSearch } from 'react-icons/im';
 import css from './Searchbar.module.css';
 import { toast } from 'react-toastify';
 import { useSearchParams } from 'react-router-dom';
+import { toastConfig } from 'services/data';
 
 const Searchbar = ({ onSubmit }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const searchTerm = searchParams.get('query');
-  // const location = useLocation();
+  // console.log(searchTerm);
 
   const [movieName, setMovieName] = useState('');
 
-  //   const handleNameChange = () => {};
-  //   const handleSubmit = () => {};
   const handleNameChange = event => {
     setMovieName(event.currentTarget.value.toLowerCase());
   };
 
   const handleSubmit = event => {
     event.preventDefault();
-    if (movieName.trim() === '') {
-      toast.error('Please, input image name');
+
+    if (searchTerm?.trim() === '') {
+      toast.error('Please, input movie name', toastConfig);
       return;
     }
-    if (movieName.trim().length > 2) {
-      setSearchParams({ query: movieName });
-    }
-    // console.log(movieName);
-    onSubmit(searchTerm);
+
+    // if (movieName.trim().length > 2) {
+    setSearchParams({ query: movieName });
+    // }
+
+    onSubmit(movieName);
 
     setMovieName('');
+    // setSearchParams({ query: '' });
   };
 
   return (

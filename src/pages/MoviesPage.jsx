@@ -1,6 +1,6 @@
 import Searchbar from 'components/Searchbar/Searchbar';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { fetchMoviesSearch } from 'services/Api';
 import css from './Page.module.css';
@@ -11,12 +11,12 @@ const MoviesPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [movies, setMovies] = useState([]);
+  const location = useLocation();
 
   useEffect(() => {
     if (!searchQuery) return;
 
     const fetchMoviesByQuery = async () => {
-      // console.log(searchQuery);
       if (searchQuery.trim() === '') {
         return;
       }
@@ -24,10 +24,14 @@ const MoviesPage = () => {
         setIsLoading(true);
         const { results } = await fetchMoviesSearch(searchQuery);
         console.log(results);
-        if (results.length === 0) {
-          return toast.error('Sorry images not found...', toastConfig);
+        if (results.length === 0 || !results) {
+          return toast.error('Sorry movies not found...', toastConfig);
         }
-        // console.log(results);
+        toast.success(
+          'Your search movies were successfully fetched!',
+          toastConfig
+        );
+
         setMovies(results);
         setIsLoading(false);
       } catch (error) {
@@ -39,33 +43,25 @@ const MoviesPage = () => {
     fetchMoviesByQuery();
   }, [searchQuery]);
 
-  //  useEffect(() => {
-  //    movies.length > 0 &&
-  //      localStorage.setItem('movies', JSON.stringify(movies));
-  //  }, [movies]);
-
   const handleInputChange = searchQuery => {
-    //  console.log(searchQuery);
     setSearchQuery(searchQuery);
     setMovies([]);
   };
-  // console.log(movies);
 
   return (
     <div>
       <Searchbar onSubmit={handleInputChange} />
       {isLoading && <Loader />}
-      {/* {movies.length === 0 ? (
-        <h3 className={css.cast_title}>No Movies</h3>
-      ) : ( */}
+
       <ul className={css.movieList}>
         {movies.map(({ id, original_title }) => (
           <li key={id} className={css.movieItem}>
-            <Link to={`/movies/${id}`}>{original_title}</Link>
+            <Link state={{ from: location }} to={`/movies/${id}`}>
+              {original_title}
+            </Link>
           </li>
         ))}
       </ul>
-      {/* )}  */}
     </div>
   );
 };

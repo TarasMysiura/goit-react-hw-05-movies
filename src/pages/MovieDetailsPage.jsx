@@ -1,14 +1,19 @@
-import React, { Suspense, lazy, useEffect, useState } from 'react';
+import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import css from './Page.module.css';
 import { fetchMoviesDetails } from 'services/Api';
 import { toast } from 'react-toastify';
-import { NavLink, Route, Routes, useParams } from 'react-router-dom';
+import {
+  Link,
+  NavLink,
+  Route,
+  Routes,
+  useLocation,
+  useParams,
+} from 'react-router-dom';
 import { toastConfig } from 'services/data';
 import { Loader } from 'components/Loader/Loader';
+import ButtonGoBack from 'components/ButtonGoBack/ButtonGoBack';
 // import PropTypes from 'prop-types';
-
-// import CastPage from './CastPage';
-// import ReviewsPage from './ReviewsPage';
 
 const CastPage = lazy(() => import('pages/CastPage'));
 const ReviewsPage = lazy(() => import('pages/ReviewsPage'));
@@ -16,13 +21,16 @@ const ReviewsPage = lazy(() => import('pages/ReviewsPage'));
 const MovieDetailsPage = () => {
   const [movie, setMovie] = useState(null);
   const { id } = useParams();
+  const location = useLocation();
+  const backLickHref = useRef(location.state?.from ?? '/');
+  console.log(location);
+
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
         const response = await fetchMoviesDetails(id);
         setMovie(response);
-        // console.log(response)
       } catch (error) {
         toast.error('Error fetching movie details:', error, toastConfig);
       }
@@ -34,11 +42,14 @@ const MovieDetailsPage = () => {
   if (!movie) {
     return <div>Loading...</div>;
   }
-  //   console.log(movie);
   const { title, poster_path, vote_average, overview, genres } = movie;
   return (
     <div className={css.container_Movie}>
+      <Link to={backLickHref.current}>        
+        <ButtonGoBack />
+      </Link>
       <h1 className={css.movie_title}>{title}</h1>
+
       <div className={css.movie_wrap}>
         <img
           src={
@@ -62,10 +73,16 @@ const MovieDetailsPage = () => {
           </p>
           <h2 className={css.movie_pretitle}>Additional information</h2>
           <div className={css.container_mini}>
-            <NavLink to="cast" className={css.reviews}>
+            <NavLink
+              to="cast"
+              className={css.reviews}
+            >
               Cast
             </NavLink>
-            <NavLink to="reviews" className={css.reviews}>
+            <NavLink
+              to="reviews"
+              className={css.reviews}
+            >
               Reviews
             </NavLink>
           </div>
