@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-// import { Link } from 'react-router-dom';
 
 import { fetchMoviesTrending } from 'services/Api';
 
@@ -9,10 +8,13 @@ import { toast } from 'react-toastify';
 import { Loader } from 'components/Loader/Loader';
 import { toastConfig } from 'services/data';
 import MoviesList from 'components/MoviesList/MoviesList';
+import { useLocation } from 'react-router-dom';
 
 const HomePage = () => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const location = useLocation();
+
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -37,7 +39,7 @@ const HomePage = () => {
     <div>
       <h1 className={css.title}>Trending today</h1>
       {error && toast.error('Something went wrong...')}
-      <MoviesList movies={movies} />
+      <MoviesList movies={movies} location={location} />
       {isLoading && <Loader />}
     </div>
   );

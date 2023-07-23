@@ -3,18 +3,7 @@
   font-weight: 600;
   margin-bottom: 10px;
 }
-
-/* .movieList {
-  padding-left: 20px;
-  font-size: 16px;
-  font-weight: 400;
-}
-
-.movieItem {
-  list-style-type: none;
-  line-height: 1.5;
-} */
-
+/* =========MoviePage============== */
 .container_Movie {
   width: 100%;
 }
@@ -54,8 +43,6 @@
 }
 
 /* ============CAST============ */
-/* .castPage_container {
-} */
 .cast_title {
   font-size: 32px;
   text-align: center;
@@ -102,8 +89,6 @@
 }
 .reviews_item {
   list-style-type: none;
-  /* display: flex;
-  flex-direction: column; */
   padding-top: auto;
 }
 .reviews_span {

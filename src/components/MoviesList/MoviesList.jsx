@@ -24,7 +24,7 @@ MoviesList.propTypes = {
       original_title: PropTypes.string,
     })
   ),
-  location: PropTypes.object,
+  location: PropTypes.object.isRequired,
 };
 
 export default MoviesList;

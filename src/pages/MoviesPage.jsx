@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { fetchMoviesSearch } from 'services/Api';
-// import css from './Page.module.css';
 import { Loader } from 'components/Loader/Loader';
 import { toastConfig } from 'services/data';
 import MoviesList from 'components/MoviesList/MoviesList';
