@@ -53,7 +53,7 @@ const MoviesPage = () => {
     <div>
       <Searchbar onSubmit={handleInputChange} />
       {isLoading && <Loader />}
-      <MoviesList movies={movies} location={location} />
+      {movies && <MoviesList movies={movies} location={location} />}
     </div>
   );
 };

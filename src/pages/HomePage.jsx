@@ -39,7 +39,7 @@ const HomePage = () => {
     <div>
       <h1 className={css.title}>Trending today</h1>
       {error && toast.error('Something went wrong...')}
-      <MoviesList movies={movies} location={location} />
+      {movies && <MoviesList movies={movies} location={location} />}
       {isLoading && <Loader />}
     </div>
   );
