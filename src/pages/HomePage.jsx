@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 import { fetchMoviesTrending } from 'services/Api';
 
@@ -8,6 +8,7 @@ import css from './Page.module.css';
 import { toast } from 'react-toastify';
 import { Loader } from 'components/Loader/Loader';
 import { toastConfig } from 'services/data';
+import MoviesList from 'components/MoviesList/MoviesList';
 
 const HomePage = () => {
   const [movies, setMovies] = useState([]);
@@ -36,13 +37,7 @@ const HomePage = () => {
     <div>
       <h1 className={css.title}>Trending today</h1>
       {error && toast.error('Something went wrong...')}
-      <ul className={css.movieList}>
-        {movies.map(({ id, original_title }) => (
-          <li key={id} className={css.movieItem}>
-            <Link to={`/movies/${id}`}>{original_title}</Link>
-          </li>
-        ))}
-      </ul>
+      <MoviesList movies={movies} />
       {isLoading && <Loader />}
     </div>
   );

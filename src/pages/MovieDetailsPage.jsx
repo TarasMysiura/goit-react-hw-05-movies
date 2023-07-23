@@ -25,7 +25,6 @@ const MovieDetailsPage = () => {
   const backLickHref = useRef(location.state?.from ?? '/');
   // console.log(location);
 
-
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
@@ -45,7 +44,7 @@ const MovieDetailsPage = () => {
   const { title, poster_path, vote_average, overview, genres } = movie;
   return (
     <div className={css.container_Movie}>
-      <Link to={backLickHref.current}>        
+      <Link to={backLickHref.current}>
         <ButtonGoBack />
       </Link>
       <h1 className={css.movie_title}>{title}</h1>
@@ -73,16 +72,10 @@ const MovieDetailsPage = () => {
           </p>
           <h2 className={css.movie_pretitle}>Additional information</h2>
           <div className={css.container_mini}>
-            <NavLink
-              to="cast"
-              className={css.reviews}
-            >
+            <NavLink to="cast" className={css.reviews}>
               Cast
             </NavLink>
-            <NavLink
-              to="reviews"
-              className={css.reviews}
-            >
+            <NavLink to="reviews" className={css.reviews}>
               Reviews
             </NavLink>
           </div>
@@ -99,7 +92,5 @@ const MovieDetailsPage = () => {
     </div>
   );
 };
-
-MovieDetailsPage.propTypes = {};
 
 export default MovieDetailsPage;

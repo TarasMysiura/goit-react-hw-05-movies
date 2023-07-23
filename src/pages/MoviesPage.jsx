@@ -1,14 +1,14 @@
 import Searchbar from 'components/Searchbar/Searchbar';
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { fetchMoviesSearch } from 'services/Api';
-import css from './Page.module.css';
+// import css from './Page.module.css';
 import { Loader } from 'components/Loader/Loader';
 import { toastConfig } from 'services/data';
+import MoviesList from 'components/MoviesList/MoviesList';
 
 const MoviesPage = () => {
-  // const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [movies, setMovies] = useState([]);
   const location = useLocation();
@@ -54,16 +54,7 @@ const MoviesPage = () => {
     <div>
       <Searchbar onSubmit={handleInputChange} />
       {isLoading && <Loader />}
-
-      <ul className={css.movieList}>
-        {movies.map(({ id, original_title }) => (
-          <li key={id} className={css.movieItem}>
-            <Link state={{ from: location }} to={`/movies/${id}`}>
-              {original_title}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <MoviesList movies={movies} location={location} />
     </div>
   );
 };
